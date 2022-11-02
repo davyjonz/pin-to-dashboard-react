@@ -1,8 +1,8 @@
 export class Page{
-    constructor(pageNumber,pageName,pageURL,pageColor){
+    constructor(pageNumber,pageName,pageURL,pageStyle){
         this.pageName=pageName;
         this.pageNumber=pageNumber;
         this.pageURL=pageURL;
-        this.pageColor=pageColor;
+        this.pageStyle=pageStyle;
     }
 }

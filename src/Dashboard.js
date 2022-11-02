@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { json } from "react-router-dom";
 import { Pages } from "./models/Pages";
-import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  let [pages,setPages] = useState(new Array());
 
   function comparePages( a, b ) {
     if ( a.pageName < b.pageName ){
@@ -27,23 +26,41 @@ const Dashboard = () => {
       document.getElementById(pageId).remove();
     }
   };
+  function showPinnedPages(){
+    pages.map(page =>
+      <div class="col-md-4">             
+            <div className={"card text-center p-4 "+page.pageStyle} 
+            id={'page'+page.pageNumber} 
+            onClick={()=>onRemoveDashPage(page)}>
+              <div class="class-body">
+                {page.pageName}
+              </div>
+            </div>
+      </div>
+    )
+  };
+  useEffect(()=>{
+    setPages(Pages.DashboardPages.sort(comparePages));
 
-    return <div class="row mt-3">
-    {
-      Pages.DashboardPages.sort(comparePages)
-      .map(page =>
-          <div class="col-md-4">             
-                <div class="card text-center p-4" 
-                id={'page'+page.pageNumber} 
-                onClick={()=>onRemoveDashPage(page)}>
-                  <div class="class-body">
-                    {page.pageName}
-                  </div>
+  });
+
+    return(
+        <div class="row m-2">
+            {
+              pages.map(page =>
+                <div class="col-md-4">             
+                      <div className={"card text-center p-4 "+page.pageStyle} 
+                      id={'page'+page.pageNumber} 
+                      onClick={()=>onRemoveDashPage(page)}>
+                        <div class="class-body">
+                          {page.pageName}
+                        </div>
+                      </div>
                 </div>
+              )
+            }
           </div>
-        )
-    }
-  </div>;
+    )  ;
   };
   
   export default Dashboard;
